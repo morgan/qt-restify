@@ -8,10 +8,12 @@ An application for visualizing and testing RESTful requests.
 2. Install Qt libraries 4.8.3 for Mac
 3. In terminal:
 
-`cd restify
+```
+cd restify
 qmake -project
 qmake -spec macx-g++
-make`
+make
+```
 
 ## Version 0.1.0
 
