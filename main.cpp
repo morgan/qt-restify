@@ -3,10 +3,10 @@
 
 int main (int argc, char *argv[])
 {
-    QApplication app(argc, argv);
+	QApplication app(argc, argv);
 
-    Restify restify;
-    restify.show();
+	Restify restify;
+	restify.show();
 
-    return app.exec();
+	return app.exec();
 }

@@ -14,14 +14,14 @@ QT_END_NAMESPACE
 class Restify : public QWidget
 {
 	public:
-	    Restify();
+		Restify();
 
 	private:
 		QInputDialog *url;
 		QLabel *urlLabel;
-	    QGroupBox *optionsGroupBox;
-	    QGridLayout *optionsGroupBoxLayout;   
-	    QVBoxLayout *mainLayout;
+		QGroupBox *requestGroup;
+		QGridLayout *requestGroupLayout;   
+		QVBoxLayout *layout;
 };
 
 #endif

@@ -3,20 +3,20 @@
 
 Restify::Restify()
 {
-	optionsGroupBox = new QGroupBox(tr("Options"));
+	requestGroup = new QGroupBox(tr("Options"));
 
-    url = new QInputDialog;
-    urlLabel = new QLabel(tr("URL"));
+	url = new QInputDialog;
+	urlLabel = new QLabel(tr("URL"));
 
-	optionsGroupBoxLayout = new QGridLayout; 
-    optionsGroupBoxLayout->addWidget(urlLabel, 0, 0);
-    optionsGroupBoxLayout->addWidget(url, 0, 1);
-	optionsGroupBox->setLayout(optionsGroupBoxLayout);
+	requestGroupLayout = new QGridLayout; 
+	requestGroupLayout->addWidget(url, 0, 1);
+	requestGroupLayout->addWidget(urlLabel, 0, 0);
+	requestGroup->setLayout(requestGroupLayout);
 
-    mainLayout = new QVBoxLayout;
-    mainLayout->addWidget(optionsGroupBox);
-    setLayout(mainLayout);	
+	layout = new QVBoxLayout;
+	layout->addWidget(requestGroup);
+	setLayout(layout);	
 
-    setWindowTitle(tr("Restify"));
-    resize(500, 200);    
+	setWindowTitle(tr("Restify"));
+	resize(500, 200);    
 }
