@@ -1,51 +1,31 @@
-#include <QtGui>
 #include "restify.h"
 
 Restify::Restify()
 {
 	setupOptions();
 
-	url = new QLineEdit;
-
-	submit = new QPushButton("Request");
-
 	requestLayout = new QHBoxLayout;
-	requestLayout->addLayout(methods);
+	requestLayout->addWidget(method);
 	requestLayout->addWidget(url);
 	requestLayout->addWidget(submit);
 
 	setLayout(requestLayout);
 
 	setWindowTitle(tr("Restify"));
-	resize(800, 200);    
+	resize(800, 50);    
 }
 
 void Restify::setupOptions()
 {
-	methodGet = new QPushButton(tr("GET"));
-	methodGet->setCheckable(true);
-	methodGet->setChecked(true);
+	method = new QComboBox;
+	method->addItem("GET");
+	method->addItem("POST");
+	method->addItem("PUT");
+	method->addItem("PATCH");
+	method->addItem("DELETE");
 
-	methodPost = new QPushButton(tr("POST"));
-	methodPost->setCheckable(true);
+	url = new QLineEdit;
+	url->setProperty("placeholderText", "http://api.example.com/resource.json?key=value");
 
-	methodPut = new QPushButton(tr("PUT"));
-	methodPut->setCheckable(true);
-
-	methodDelete = new QPushButton(tr("DELETE"));
-	methodDelete->setCheckable(true);
-
-	methodsGroup = new QButtonGroup(this);
-	methodsGroup->addButton(methodGet);
-	methodsGroup->addButton(methodPost);
-	methodsGroup->addButton(methodPut);
-	methodsGroup->addButton(methodDelete);
-	methodsGroup->setExclusive(true);
-
-	methods = new QHBoxLayout;
-	methods->addWidget(methodGet);
-	methods->addWidget(methodPost);
-	methods->addWidget(methodPut);
-	methods->addWidget(methodDelete);
-	methods->setSpacing(0);
+	submit = new QPushButton("Request");
 }

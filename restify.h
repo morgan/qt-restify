@@ -2,14 +2,10 @@
 #define RESTIFY_H
 
 #include <QWidget>
-
-QT_BEGIN_NAMESPACE
-class QButtonGroup;
-class QHBoxLayout;
-class QPushButton;
-class QLineEdit;
-class QPushButton;
-QT_END_NAMESPACE
+#include <QHBoxLayout>
+#include <QComboBox>
+#include <QLineEdit>
+#include <QPushButton>
 
 class Restify : public QWidget
 {
@@ -19,12 +15,10 @@ class Restify : public QWidget
 	private:
 		void setupOptions();
 
-		QPushButton *methodGet, *methodPost, *methodPut, *methodDelete;
-		QButtonGroup *methodsGroup;
-		QHBoxLayout *methods;
+		QHBoxLayout *requestLayout;
+		QComboBox *method;
 		QLineEdit *url;
 		QPushButton *submit;
-		QHBoxLayout *requestLayout;
 };
 
 #endif
