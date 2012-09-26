@@ -4,11 +4,11 @@
 #include <QWidget>
 
 QT_BEGIN_NAMESPACE
-class QInputDialog;
-class QGroupBox;
-class QGridLayout;
-class QLabel;
-class QVBoxLayout;
+class QButtonGroup;
+class QHBoxLayout;
+class QPushButton;
+class QLineEdit;
+class QPushButton;
 QT_END_NAMESPACE
 
 class Restify : public QWidget
@@ -17,11 +17,14 @@ class Restify : public QWidget
 		Restify();
 
 	private:
-		QInputDialog *url;
-		QLabel *urlLabel;
-		QGroupBox *requestGroup;
-		QGridLayout *requestGroupLayout;   
-		QVBoxLayout *layout;
+		void setupOptions();
+
+		QPushButton *methodGet, *methodPost, *methodPut, *methodDelete;
+		QButtonGroup *methodsGroup;
+		QHBoxLayout *methods;
+		QLineEdit *url;
+		QPushButton *submit;
+		QHBoxLayout *requestLayout;
 };
 
 #endif
