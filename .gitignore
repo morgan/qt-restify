@@ -1,5 +1,6 @@
 .DS_Store
 *.o
+moc_*
 Makefile
 restify.pro
 restify.app
