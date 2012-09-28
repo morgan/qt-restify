@@ -6,6 +6,7 @@
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
 #include <QNetworkReply>
+#include <QTableWidget>
 
 QT_BEGIN_NAMESPACE
 class QHBoxLayout;
@@ -41,6 +42,7 @@ class Restify : public QWidget
 		QPushButton *submit;
 		QTabWidget *responseLayout;
 		QTextEdit *responseContent;
+		QTableWidget *responseHeadersReceived;
 		QNetworkAccessManager *request;
 		QNetworkReply *requestReply;
 };

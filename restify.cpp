@@ -51,9 +51,12 @@ void Restify::_setupResponse()
 	responseContent = new QTextEdit;
 	responseContent->setProperty("readOnly", true);
 
+	responseHeadersReceived = new QTableWidget;
+
 	responseLayout = new QTabWidget;
-	responseLayout->hide();
 	responseLayout->addTab(responseContent, tr("Response"));
+	responseLayout->addTab(responseHeadersReceived, tr("Headers Received"));
+	responseLayout->hide();
 }
 
 void Restify::_request()
@@ -70,6 +73,25 @@ void Restify::_requestReply(QNetworkReply *reply)
 	QString string(bytes); 
 
 	responseContent->setText(bytes);
+
+	QList<QByteArray> replyHeaders = reply->rawHeaderList();
+
+	QStringList tableLabels;
+	tableLabels << "Name" << "Value";
+
+	responseHeadersReceived->clear();
+	responseHeadersReceived->setRowCount(replyHeaders.count());
+	responseHeadersReceived->setColumnCount(2);	
+	responseHeadersReceived->setHorizontalHeaderLabels(tableLabels);
+
+	for (int i = 0; i < replyHeaders.count(); ++i)
+	{
+		QString key = replyHeaders[i].constData();
+		QString value = reply->rawHeader(replyHeaders[i]).constData();
+
+		responseHeadersReceived->setItem(i, 0, new QTableWidgetItem(key));
+		responseHeadersReceived->setItem(i, 1, new QTableWidgetItem(value));
+	}
 
 	responseLayout->show();
 }
