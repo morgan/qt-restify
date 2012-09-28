@@ -39,7 +39,7 @@ void Restify::_setupRequest()
 	method->addItem("PATCH");
 	method->addItem("DELETE");
 
-	url = new QLineEdit;
+	url = new QLineEdit("http://feeds.feedburner.com/KohanaModules?format=xml");
 	url->setProperty("placeholderText", "http://api.example.com/resource.json?key=value");
 
 	submit = new QPushButton(tr("Request"));
@@ -58,7 +58,18 @@ void Restify::_setupResponse()
 
 void Restify::_request()
 {
-	responseContent->setText(this->getMethod() + " " + this->getUrl());
+	request = new QNetworkAccessManager(this);
+	connect(request, SIGNAL(finished(QNetworkReply*)), this, SLOT(_requestReply(QNetworkReply*)));
+
+	request->get(QNetworkRequest(QUrl(this->getUrl())));
+}
+
+void Restify::_requestReply(QNetworkReply *reply)
+{
+	QByteArray bytes = reply->readAll();
+	QString string(bytes); 
+
+	responseContent->setText(bytes);
 
 	responseLayout->show();
 }

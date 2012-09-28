@@ -2,5 +2,4 @@
 *.o
 moc_*
 Makefile
-restify.pro
 restify.app

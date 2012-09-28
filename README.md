@@ -10,7 +10,6 @@ An application for visualizing and testing RESTful requests.
 
 ```
 cd restify
-qmake -project
 qmake -spec macx-g++
 make
 ```
