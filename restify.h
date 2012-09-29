@@ -34,6 +34,7 @@ class Restify : public QWidget
 	private:
 		void _setupRequest();
 		void _setupResponse();
+		void _setHeaders(const QList<QPair<QByteArray, QByteArray> > headers, QTableWidget *table);
 
 		QHBoxLayout *requestLayout;
 		QVBoxLayout *layout;
@@ -42,8 +43,8 @@ class Restify : public QWidget
 		QPushButton *submit;
 		QTabWidget *responseLayout;
 		QTextEdit *responseContent;
-		QTableWidget *responseHeadersReceived;
-		QNetworkAccessManager *request;
+		QTableWidget *responseHeadersReceived, *responseHeadersSent;
+		QNetworkAccessManager *networkAccess;
 		QNetworkReply *requestReply;
 };
 

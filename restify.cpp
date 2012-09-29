@@ -52,46 +52,60 @@ void Restify::_setupResponse()
 	responseContent->setProperty("readOnly", true);
 
 	responseHeadersReceived = new QTableWidget;
+	responseHeadersSent = new QTableWidget;
 
 	responseLayout = new QTabWidget;
 	responseLayout->addTab(responseContent, tr("Response"));
 	responseLayout->addTab(responseHeadersReceived, tr("Headers Received"));
+	responseLayout->addTab(responseHeadersSent, tr("Headers Sent"));
 	responseLayout->hide();
 }
 
 void Restify::_request()
 {
-	request = new QNetworkAccessManager(this);
-	connect(request, SIGNAL(finished(QNetworkReply*)), this, SLOT(_requestReply(QNetworkReply*)));
+	networkAccess = new QNetworkAccessManager(this);
+	connect(networkAccess, SIGNAL(finished(QNetworkReply*)), this, SLOT(_requestReply(QNetworkReply*)));
 
-	request->get(QNetworkRequest(QUrl(this->getUrl())));
+	networkAccess->get(QNetworkRequest(QUrl(this->getUrl())));
 }
 
 void Restify::_requestReply(QNetworkReply *reply)
 {
+	QNetworkRequest request = reply->request();
+
+	QList<QPair<QByteArray, QByteArray> > sentHeadersPaired;
+	QList<QByteArray> sentHeaders = request.rawHeaderList();
+
+	// Create pair for `QNetworkRequest` to simulate `QNetworkReply::rawHeaderPairs`
+	for (int i = 0; i < sentHeaders.count(); ++i)
+		sentHeadersPaired.append(qMakePair(sentHeaders[i], request.rawHeader(sentHeaders[i])));
+
+	this->_setHeaders(sentHeadersPaired, responseHeadersSent);
+	this->_setHeaders(reply->rawHeaderPairs(), responseHeadersReceived);
+
 	QByteArray bytes = reply->readAll();
 	QString string(bytes); 
 
 	responseContent->setText(bytes);
 
-	QList<QByteArray> replyHeaders = reply->rawHeaderList();
+	responseLayout->show();
+}
 
+void Restify::_setHeaders(const QList<QPair<QByteArray, QByteArray> > headers, QTableWidget *table)
+{
 	QStringList tableLabels;
 	tableLabels << "Name" << "Value";
 
-	responseHeadersReceived->clear();
-	responseHeadersReceived->setRowCount(replyHeaders.count());
-	responseHeadersReceived->setColumnCount(2);	
-	responseHeadersReceived->setHorizontalHeaderLabels(tableLabels);
+	table->clear();
+	table->setRowCount(headers.count());
+	table->setColumnCount(2);
+	table->setHorizontalHeaderLabels(tableLabels);
 
-	for (int i = 0; i < replyHeaders.count(); ++i)
+	for (int i = 0; i < headers.count(); ++i)
 	{
-		QString key = replyHeaders[i].constData();
-		QString value = reply->rawHeader(replyHeaders[i]).constData();
+		QPair<QByteArray, QByteArray> pair = headers[i];
 
-		responseHeadersReceived->setItem(i, 0, new QTableWidgetItem(key));
-		responseHeadersReceived->setItem(i, 1, new QTableWidgetItem(value));
+		table->setItem(i, 0, new QTableWidgetItem(pair.first.constData()));
+		table->setItem(i, 1, new QTableWidgetItem(pair.second.constData()));
 	}
-
-	responseLayout->show();
 }
