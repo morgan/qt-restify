@@ -30,6 +30,7 @@ class Restify : public QWidget
 	private slots:
 		void _request();
 		void _requestReply(QNetworkReply *reply);
+		void _toggleConfig();
 
 	private:
 		void _setupRequest();
@@ -41,6 +42,11 @@ class Restify : public QWidget
 		QComboBox *method;
 		QLineEdit *url;
 		QPushButton *submit;
+
+		QPushButton *settings;
+		QTextEdit *configHeaders;
+		QTabWidget *configLayout;
+
 		QTabWidget *responseLayout;
 		QTextEdit *responseContent;
 		QTableWidget *responseHeadersReceived, *responseHeadersSent;

@@ -7,11 +7,14 @@ Restify::Restify()
 
 	requestLayout = new QHBoxLayout;
 	requestLayout->addWidget(method);
+	requestLayout->addWidget(settings);
 	requestLayout->addWidget(url);
 	requestLayout->addWidget(submit);
 
 	layout = new QVBoxLayout;
+	layout->setAlignment(Qt::AlignTop);
 	layout->addLayout(requestLayout);
+	layout->addWidget(configLayout);
 	layout->addWidget(responseLayout);
 
 	setLayout(layout);
@@ -44,6 +47,20 @@ void Restify::_setupRequest()
 
 	submit = new QPushButton(tr("Request"));
 	submit->connect(submit, SIGNAL(clicked()), this, SLOT(_request()));
+
+	settings = new QPushButton(tr("Config"));
+	settings->connect(settings, SIGNAL(clicked()), this, SLOT(_toggleConfig()));
+
+	configHeaders = new QTextEdit;
+
+	configLayout = new QTabWidget;
+	configLayout->addTab(configHeaders, tr("Headers"));
+	configLayout->hide();
+}
+
+void Restify::_toggleConfig()
+{
+	configLayout->isVisible() ? configLayout->hide() : configLayout->show();
 }
 
 void Restify::_setupResponse()
@@ -66,7 +83,11 @@ void Restify::_request()
 	networkAccess = new QNetworkAccessManager(this);
 	connect(networkAccess, SIGNAL(finished(QNetworkReply*)), this, SLOT(_requestReply(QNetworkReply*)));
 
-	networkAccess->get(QNetworkRequest(QUrl(this->getUrl())));
+	networkAccess->sendCustomRequest
+	(
+		QNetworkRequest(QUrl(this->getUrl())), 
+		QByteArray(this->getMethod().toLatin1())
+	);
 }
 
 void Restify::_requestReply(QNetworkReply *reply)
