@@ -51,10 +51,21 @@ void Restify::_setupRequest()
 	settings = new QPushButton(tr("Config"));
 	settings->connect(settings, SIGNAL(clicked()), this, SLOT(_toggleConfig()));
 
-	configHeaders = new QTextEdit;
+	QStringList tableLabels;
+	tableLabels << "Name" << "Value";
+
+	configData = new QTableWidget(10, 2);
+	configData->setHorizontalHeaderLabels(tableLabels);
+
+	configHeaders = new QTableWidget(10, 2);
+	configHeaders->setHorizontalHeaderLabels(tableLabels);
+
+	configSettings = new QTextEdit;
 
 	configLayout = new QTabWidget;
+	configLayout->addTab(configData, tr("Data2"));
 	configLayout->addTab(configHeaders, tr("Headers"));
+	configLayout->addTab(configSettings, tr("Settings"));
 	configLayout->hide();
 }
 
@@ -83,9 +94,25 @@ void Restify::_request()
 	networkAccess = new QNetworkAccessManager(this);
 	connect(networkAccess, SIGNAL(finished(QNetworkReply*)), this, SLOT(_requestReply(QNetworkReply*)));
 
+	QNetworkRequest networkRequest = QNetworkRequest(QUrl(this->getUrl()));
+
+	for (int i = 0; i < configHeaders->rowCount(); ++i)
+	{
+		if (configHeaders->item(i, 0) && configHeaders->item(i, 1))
+		{
+			QString key = configHeaders->item(i, 0)->text();
+			QString value = configHeaders->item(i, 1)->text();
+
+			if ( ! key.isEmpty() && ! value.isEmpty())
+			{
+				networkRequest.setRawHeader(key.toLocal8Bit(), value.toLocal8Bit());
+			}
+		}
+	}
+
 	networkAccess->sendCustomRequest
 	(
-		QNetworkRequest(QUrl(this->getUrl())), 
+		networkRequest, 
 		QByteArray(this->getMethod().toLatin1())
 	);
 }

@@ -44,7 +44,9 @@ class Restify : public QWidget
 		QPushButton *submit;
 
 		QPushButton *settings;
-		QTextEdit *configHeaders;
+		QTableWidget *configData;
+		QTableWidget *configHeaders;
+		QTextEdit *configSettings;
 		QTabWidget *configLayout;
 
 		QTabWidget *responseLayout;
