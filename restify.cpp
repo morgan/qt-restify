@@ -1,5 +1,10 @@
 #include "restify.h"
 
+/**
+ * Setup environment
+ *
+ * @access	public
+ */
 Restify::Restify()
 {
 	this->_setupRequest();
@@ -23,16 +28,34 @@ Restify::Restify()
 	resize(800, 50);
 }
 
+/**
+ * Get selected HTTP method
+ *
+ * @access	private
+ * @return	QString
+ */
 QString Restify::getMethod()
 {
 	return method->currentText();
 }
 
+/**
+ * Get user input for URL
+ *
+ * @access	private
+ * @return	QString
+ */
 QString Restify::getUrl()
 {
 	return url->text();
 }
 
+/**
+ * Setup layout for request
+ *
+ * @access	private
+ * @return	void
+ */
 void Restify::_setupRequest()
 {
 	method = new QComboBox;
@@ -63,17 +86,29 @@ void Restify::_setupRequest()
 	configSettings = new QTextEdit;
 
 	configLayout = new QTabWidget;
-	configLayout->addTab(configData, tr("Data2"));
+	configLayout->addTab(configData, tr("Data"));
 	configLayout->addTab(configHeaders, tr("Headers"));
 	configLayout->addTab(configSettings, tr("Settings"));
 	configLayout->hide();
 }
 
+/**
+ * Handle toggle configuration layout
+ *
+ * @access	private
+ * @return	void
+ */
 void Restify::_toggleConfig()
 {
 	configLayout->isVisible() ? configLayout->hide() : configLayout->show();
 }
 
+/**
+ * Setup UI for response, hide until needed.
+ *
+ * @access	private
+ * @return	void
+ */
 void Restify::_setupResponse()
 {
 	responseContent = new QTextEdit;
@@ -89,6 +124,12 @@ void Restify::_setupResponse()
 	responseLayout->hide();
 }
 
+/**
+ * Build request and send it
+ *
+ * @access	private
+ * @return	void
+ */
 void Restify::_request()
 {
 	networkAccess = new QNetworkAccessManager(this);
@@ -117,6 +158,13 @@ void Restify::_request()
 	);
 }
 
+/**
+ * Handle request reply
+ *
+ * @access	private
+ * @param	*QNetworkReply
+ * @return	void
+ */
 void Restify::_requestReply(QNetworkReply *reply)
 {
 	QNetworkRequest request = reply->request();
@@ -139,6 +187,14 @@ void Restify::_requestReply(QNetworkReply *reply)
 	responseLayout->show();
 }
 
+/**
+ * Set QTableWidget data using provided QList
+ *
+ * @access	private
+ * @param	QList
+ * @param	QTableWidget
+ * @return	void
+ */
 void Restify::_setHeaders(const QList<QPair<QByteArray, QByteArray> > headers, QTableWidget *table)
 {
 	QStringList tableLabels;
