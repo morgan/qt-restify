@@ -20,12 +20,13 @@ Restify::Restify()
 	layout->setAlignment(Qt::AlignTop);
 	layout->addLayout(requestLayout);
 	layout->addWidget(configLayout);
+	layout->addWidget(message);
 	layout->addWidget(responseLayout);
 
 	setLayout(layout);
 
 	setWindowTitle(tr("Restify"));
-	resize(800, 50);
+	resize(800, 500);
 }
 
 /**
@@ -122,6 +123,12 @@ void Restify::_setupResponse()
 	responseLayout->addTab(responseHeadersReceived, tr("Headers Received"));
 	responseLayout->addTab(responseHeadersSent, tr("Headers Sent"));
 	responseLayout->hide();
+
+	message = new QLabel(this);
+	message->setFrameStyle(QFrame::Panel | QFrame::Sunken);
+	message->setMargin(10);
+	message->setWordWrap(true);
+	message->hide();
 }
 
 /**
@@ -153,7 +160,7 @@ void Restify::_request()
 
 	networkAccess->sendCustomRequest
 	(
-		networkRequest, 
+		networkRequest,
 		QByteArray(this->getMethod().toLatin1())
 	);
 }
@@ -167,24 +174,34 @@ void Restify::_request()
  */
 void Restify::_requestReply(QNetworkReply *reply)
 {
-	QNetworkRequest request = reply->request();
+	if ( ! reply->error())
+	{
+		message->hide();
 
-	QList<QPair<QByteArray, QByteArray> > sentHeadersPaired;
-	QList<QByteArray> sentHeaders = request.rawHeaderList();
+		QNetworkRequest request = reply->request();
 
-	// Create pair for `QNetworkRequest` to simulate `QNetworkReply::rawHeaderPairs`
-	for (int i = 0; i < sentHeaders.count(); ++i)
-		sentHeadersPaired.append(qMakePair(sentHeaders[i], request.rawHeader(sentHeaders[i])));
+		QList<QPair<QByteArray, QByteArray> > sentHeadersPaired;
+		QList<QByteArray> sentHeaders = request.rawHeaderList();
 
-	this->_setHeaders(sentHeadersPaired, responseHeadersSent);
-	this->_setHeaders(reply->rawHeaderPairs(), responseHeadersReceived);
+		// Create pair for `QNetworkRequest` to simulate `QNetworkReply::rawHeaderPairs`
+		for (int i = 0; i < sentHeaders.count(); ++i)
+			sentHeadersPaired.append(qMakePair(sentHeaders[i], request.rawHeader(sentHeaders[i])));
 
-	QByteArray bytes = reply->readAll();
-	QString string(bytes); 
+		this->_setHeaders(sentHeadersPaired, responseHeadersSent);
+		this->_setHeaders(reply->rawHeaderPairs(), responseHeadersReceived);
 
-	responseContent->setText(bytes);
+		QByteArray bytes = reply->readAll();
+		QString string(bytes); 
 
-	responseLayout->show();
+		responseContent->setText(bytes);
+
+		responseLayout->show();
+	}
+	else
+	{
+		message->setText("There was an error processing your request. " + reply->errorString());
+		message->show();
+	}
 }
 
 /**
