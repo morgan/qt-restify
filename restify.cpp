@@ -80,9 +80,11 @@ void Restify::_setupRequest()
 
 	configData = new QTableWidget(10, 2);
 	configData->setHorizontalHeaderLabels(tableLabels);
+	configData->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
 
 	configHeaders = new QTableWidget(10, 2);
 	configHeaders->setHorizontalHeaderLabels(tableLabels);
+	configHeaders->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
 
 	configSettings = new QTextEdit;
 
@@ -116,7 +118,10 @@ void Restify::_setupResponse()
 	responseContent->setProperty("readOnly", true);
 
 	responseHeadersReceived = new QTableWidget;
+	responseHeadersReceived->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
+
 	responseHeadersSent = new QTableWidget;
+	responseHeadersSent->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
 
 	responseLayout = new QTabWidget;
 	responseLayout->addTab(responseContent, tr("Response"));
