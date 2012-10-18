@@ -116,6 +116,8 @@ void Restify::_setupResponse()
 {
 	responseContent = new QTextEdit;
 	responseContent->setProperty("readOnly", true);
+	
+	highlighter = new Highlighter(responseContent->document());
 
 	responseHeadersReceived = new QTableWidget;
 	responseHeadersReceived->horizontalHeader()->setResizeMode(QHeaderView::Stretch);

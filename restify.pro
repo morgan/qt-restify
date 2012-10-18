@@ -5,5 +5,5 @@ INCLUDEPATH += .
 
 QT += network
 
-HEADERS += restify.h
-SOURCES += main.cpp restify.cpp
+HEADERS += restify.h highlighter.h
+SOURCES += main.cpp restify.cpp highlighter.cpp 

@@ -7,6 +7,7 @@
 #include <QNetworkRequest>
 #include <QNetworkReply>
 #include <QTableWidget>
+#include "highlighter.h"
 
 QT_BEGIN_NAMESPACE
 class QHBoxLayout;
@@ -52,6 +53,7 @@ class Restify : public QWidget
 
 		QTabWidget *responseLayout;
 		QTextEdit *responseContent;
+		Highlighter *highlighter;
 		QTableWidget *responseHeadersReceived, *responseHeadersSent;
 		QNetworkAccessManager *networkAccess;
 		QNetworkReply *requestReply;
