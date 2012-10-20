@@ -32,7 +32,8 @@ class Restify : public QWidget
 		void _request();
 		void _requestReply(QNetworkReply *reply);
 		void _toggleConfig();
-		void _request_sample(const QString& link);
+		void _toggleLaunchPad();
+		void _requestSample(const QString& link);
 
 	private:
 		void _setupRequest();
@@ -42,6 +43,7 @@ class Restify : public QWidget
 		void _setHeaders(const QList<QPair<QByteArray, QByteArray> > headers, QTableWidget *table);
 
 		QHBoxLayout *requestLayout;
+		QHBoxLayout *footer;
 		QLabel *message;
 		QVBoxLayout *layout;
 		QComboBox *method;
@@ -57,11 +59,11 @@ class Restify : public QWidget
 		QLabel *launchPad_Samples_1;
 		QLabel *launchPad_Samples_2;
 		QLabel *launchPad_Samples_3;
+		QPushButton *gettingStarted;
 
 		QPushButton *settings;
 		QTableWidget *configData;
 		QTableWidget *configHeaders;
-		QTextEdit *configSettings;
 		QTabWidget *configLayout;
 
 		QTabWidget *responseLayout;

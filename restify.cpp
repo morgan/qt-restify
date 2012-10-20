@@ -17,6 +17,9 @@ Restify::Restify()
 	requestLayout->addWidget(url);
 	requestLayout->addWidget(submit);
 
+	footer = new QHBoxLayout;
+	//footer->addWidget(gettingStarted);
+
 	layout = new QVBoxLayout;
 	layout->setAlignment(Qt::AlignTop);
 	layout->addLayout(requestLayout);
@@ -24,6 +27,7 @@ Restify::Restify()
 	layout->addWidget(message);
 	layout->addWidget(responseLayout);
 	layout->addWidget(launchPad);
+	layout->addWidget(gettingStarted);
 
 	setLayout(layout);
 
@@ -88,12 +92,9 @@ void Restify::_setupRequest()
 	configHeaders->setHorizontalHeaderLabels(tableLabels);
 	configHeaders->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
 
-	configSettings = new QTextEdit;
-
 	configLayout = new QTabWidget;
 	configLayout->addTab(configData, tr("Data"));
 	configLayout->addTab(configHeaders, tr("Headers"));
-	configLayout->addTab(configSettings, tr("Settings"));
 	configLayout->hide();
 }
 
@@ -105,9 +106,44 @@ void Restify::_setupRequest()
  */
 void Restify::_toggleConfig()
 {
-	configLayout->isVisible() ? configLayout->hide() : configLayout->show();
+	if (configLayout->isVisible())
+	{
+		configLayout->hide();
 
-	launchPad->hide();
+		if ( ! responseLayout->isVisible())
+		{
+			launchPad->show();
+			gettingStarted->hide();
+		}
+	}
+	else
+	{
+		configLayout->show();
+		launchPad->hide();
+		gettingStarted->show();
+	}
+}
+
+/**
+ * Handle toggle of launchpad
+ *
+ * @access	private
+ * @return	void
+ */
+void Restify::_toggleLaunchPad()
+{
+	if (launchPad->isVisible())
+	{
+		launchPad->hide();
+		gettingStarted->show();
+	}
+	else
+	{
+		responseLayout->hide();
+		configLayout->hide();
+		gettingStarted->hide();
+		launchPad->show();
+	}
 }
 
 /**
@@ -150,6 +186,11 @@ void Restify::_setupResponse()
  */
 void Restify::_setupLaunchPad()
 {
+	gettingStarted = new QPushButton(tr("Getting Started"));
+	gettingStarted->setFixedSize(gettingStarted->sizeHint().width(), gettingStarted->sizeHint().height());
+	gettingStarted->hide();
+	connect(gettingStarted, SIGNAL(clicked()), this, SLOT(_toggleLaunchPad()));
+
 	launchPad_Vimeo = new QLabel(this);
 	launchPad_Vimeo->setOpenExternalLinks(true);
 	launchPad_Vimeo->setTextFormat(Qt::RichText);
@@ -178,15 +219,16 @@ void Restify::_setupLaunchPad()
 	launchPad_Samples_3 = new QLabel(this);
 	launchPad_Samples_3->setText("<a href=\"http://restify.io/test\">http://restify.io/test</a>");
 
-	connect(launchPad_Samples_1, SIGNAL(linkActivated(const QString&)), this, SLOT(_request_sample(const QString&)));
-	connect(launchPad_Samples_2, SIGNAL(linkActivated(const QString&)), this, SLOT(_request_sample(const QString&)));
-	connect(launchPad_Samples_3, SIGNAL(linkActivated(const QString&)), this, SLOT(_request_sample(const QString&)));
+	connect(launchPad_Samples_1, SIGNAL(linkActivated(const QString&)), this, SLOT(_requestSample(const QString&)));
+	connect(launchPad_Samples_2, SIGNAL(linkActivated(const QString&)), this, SLOT(_requestSample(const QString&)));
+	connect(launchPad_Samples_3, SIGNAL(linkActivated(const QString&)), this, SLOT(_requestSample(const QString&)));
 
 	launchPadLayout = new QVBoxLayout;
 	launchPadLayout->addWidget(launchPad_Vimeo);	
 	launchPadLayout->addWidget(launchPad_GitHub);
 	launchPadLayout->addWidget(launchPad_Twitter);
 	launchPadLayout->addWidget(launchPad_Samples);
+
 	launchPadLayout->addWidget(launchPad_Samples_1);
 	launchPadLayout->addWidget(launchPad_Samples_2);
 	launchPadLayout->addWidget(launchPad_Samples_3);
@@ -202,7 +244,7 @@ void Restify::_setupLaunchPad()
  * @param	const QString&
  * @return	void
  */
-void Restify::_request_sample(const QString& link)
+void Restify::_requestSample(const QString& link)
 {
 	url->setText(link);
 
@@ -253,6 +295,7 @@ void Restify::_request()
 void Restify::_requestReply(QNetworkReply *reply)
 {
 	launchPad->hide();
+	gettingStarted->show();
 
 	if ( ! reply->error())
 	{
