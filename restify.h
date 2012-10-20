@@ -43,7 +43,6 @@ class Restify : public QWidget
 		void _setHeaders(const QList<QPair<QByteArray, QByteArray> > headers, QTableWidget *table);
 
 		QHBoxLayout *requestLayout;
-		QHBoxLayout *footer;
 		QLabel *message;
 		QVBoxLayout *layout;
 		QComboBox *method;

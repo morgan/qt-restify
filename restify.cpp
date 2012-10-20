@@ -17,9 +17,6 @@ Restify::Restify()
 	requestLayout->addWidget(url);
 	requestLayout->addWidget(submit);
 
-	footer = new QHBoxLayout;
-	//footer->addWidget(gettingStarted);
-
 	layout = new QVBoxLayout;
 	layout->setAlignment(Qt::AlignTop);
 	layout->addLayout(requestLayout);
@@ -247,6 +244,8 @@ void Restify::_setupLaunchPad()
 void Restify::_requestSample(const QString& link)
 {
 	url->setText(link);
+
+	launchPad->hide();
 
 	this->_request();
 }
