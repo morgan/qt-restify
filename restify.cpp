@@ -68,7 +68,7 @@ void Restify::_setupRequest()
 	method->addItem("PATCH");
 	method->addItem("DELETE");
 
-	url = new QLineEdit("http://feeds.feedburner.com/KohanaModules?format=xml");
+	url = new QLineEdit;
 	url->setProperty("placeholderText", "http://api.example.com/resource.json?key=value");
 
 	submit = new QPushButton(tr("Request"));
@@ -150,6 +150,11 @@ void Restify::_setupResponse()
  */
 void Restify::_setupLaunchPad()
 {
+	launchPad_Vimeo = new QLabel(this);
+	launchPad_Vimeo->setOpenExternalLinks(true);
+	launchPad_Vimeo->setTextFormat(Qt::RichText);
+	launchPad_Vimeo->setText("<a href=\"http://vimeo.com/26659171\"><img src=\"media/launchpad_vimeo.png\"></a>");
+
 	launchPad_GitHub = new QLabel(this);
 	launchPad_GitHub->setOpenExternalLinks(true);
 	launchPad_GitHub->setTextFormat(Qt::RichText);
@@ -160,12 +165,48 @@ void Restify::_setupLaunchPad()
 	launchPad_Twitter->setTextFormat(Qt::RichText);
 	launchPad_Twitter->setText("<a href=\"https://twitter.com/michealmorgan\"><img src=\"media/launchpad_twitter.png\"></a>");
 
+	launchPad_Samples = new QLabel(this);
+	launchPad_Samples->setTextFormat(Qt::RichText);
+	launchPad_Samples->setText("<img src=\"media/launchpad_samples.png\">");
+
+	launchPad_Samples_1 = new QLabel(this);
+	launchPad_Samples_1->setText("<a href=\"http://feeds.feedburner.com/KohanaModules?format=xml\">http://feeds.feedburner.com/KohanaModules?format=xml</a>");
+
+	launchPad_Samples_2 = new QLabel(this);
+	launchPad_Samples_2->setText("<a href=\"http://api.flickr.com/services/feeds/photos_public.gne?tags=cat&format=json\">http://api.flickr.com/services/feeds/photos_public.gne?tags=cat...</a>");
+
+	launchPad_Samples_3 = new QLabel(this);
+	launchPad_Samples_3->setText("<a href=\"http://restify.io/test\">http://restify.io/test</a>");
+
+	connect(launchPad_Samples_1, SIGNAL(linkActivated(const QString&)), this, SLOT(_request_sample(const QString&)));
+	connect(launchPad_Samples_2, SIGNAL(linkActivated(const QString&)), this, SLOT(_request_sample(const QString&)));
+	connect(launchPad_Samples_3, SIGNAL(linkActivated(const QString&)), this, SLOT(_request_sample(const QString&)));
+
 	launchPadLayout = new QVBoxLayout;
+	launchPadLayout->addWidget(launchPad_Vimeo);	
 	launchPadLayout->addWidget(launchPad_GitHub);
 	launchPadLayout->addWidget(launchPad_Twitter);
+	launchPadLayout->addWidget(launchPad_Samples);
+	launchPadLayout->addWidget(launchPad_Samples_1);
+	launchPadLayout->addWidget(launchPad_Samples_2);
+	launchPadLayout->addWidget(launchPad_Samples_3);
 
 	launchPad = new QWidget;
 	launchPad->setLayout(launchPadLayout);
+}
+
+/**
+ * Handle clicking of a launchpad sample
+ *
+ * @access	private
+ * @param	const QString&
+ * @return	void
+ */
+void Restify::_request_sample(const QString& link)
+{
+	url->setText(link);
+
+	this->_request();
 }
 
 /**

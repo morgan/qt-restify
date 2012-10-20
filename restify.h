@@ -32,11 +32,13 @@ class Restify : public QWidget
 		void _request();
 		void _requestReply(QNetworkReply *reply);
 		void _toggleConfig();
+		void _request_sample(const QString& link);
 
 	private:
 		void _setupRequest();
 		void _setupResponse();
 		void _setupLaunchPad();
+
 		void _setHeaders(const QList<QPair<QByteArray, QByteArray> > headers, QTableWidget *table);
 
 		QHBoxLayout *requestLayout;
@@ -48,8 +50,13 @@ class Restify : public QWidget
 
 		QWidget *launchPad;
 		QVBoxLayout *launchPadLayout;
+		QLabel *launchPad_Vimeo;
 		QLabel *launchPad_GitHub;
 		QLabel *launchPad_Twitter;
+		QLabel *launchPad_Samples;
+		QLabel *launchPad_Samples_1;
+		QLabel *launchPad_Samples_2;
+		QLabel *launchPad_Samples_3;
 
 		QPushButton *settings;
 		QTableWidget *configData;
