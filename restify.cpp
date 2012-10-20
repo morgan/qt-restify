@@ -9,6 +9,7 @@ Restify::Restify()
 {
 	this->_setupRequest();
 	this->_setupResponse();
+	this->_setupLaunchPad();
 
 	requestLayout = new QHBoxLayout;
 	requestLayout->addWidget(method);
@@ -22,6 +23,7 @@ Restify::Restify()
 	layout->addWidget(configLayout);
 	layout->addWidget(message);
 	layout->addWidget(responseLayout);
+	layout->addWidget(launchPad);
 
 	setLayout(layout);
 
@@ -104,6 +106,8 @@ void Restify::_setupRequest()
 void Restify::_toggleConfig()
 {
 	configLayout->isVisible() ? configLayout->hide() : configLayout->show();
+
+	launchPad->hide();
 }
 
 /**
@@ -136,6 +140,32 @@ void Restify::_setupResponse()
 	message->setMargin(10);
 	message->setWordWrap(true);
 	message->hide();
+}
+
+/**
+ * Setup launchpad
+ *
+ * @access	private
+ * @return	void
+ */
+void Restify::_setupLaunchPad()
+{
+	launchPad_GitHub = new QLabel(this);
+	launchPad_GitHub->setOpenExternalLinks(true);
+	launchPad_GitHub->setTextFormat(Qt::RichText);
+	launchPad_GitHub->setText("<a href=\"https://github.com/morgan/qt-restify\"><img src=\"media/launchpad_github.png\"></a>");
+
+	launchPad_Twitter = new QLabel(this);
+	launchPad_Twitter->setOpenExternalLinks(true);
+	launchPad_Twitter->setTextFormat(Qt::RichText);
+	launchPad_Twitter->setText("<a href=\"https://twitter.com/michealmorgan\"><img src=\"media/launchpad_twitter.png\"></a>");
+
+	launchPadLayout = new QVBoxLayout;
+	launchPadLayout->addWidget(launchPad_GitHub);
+	launchPadLayout->addWidget(launchPad_Twitter);
+
+	launchPad = new QWidget;
+	launchPad->setLayout(launchPadLayout);
 }
 
 /**
@@ -181,6 +211,8 @@ void Restify::_request()
  */
 void Restify::_requestReply(QNetworkReply *reply)
 {
+	launchPad->hide();
+
 	if ( ! reply->error())
 	{
 		message->hide();

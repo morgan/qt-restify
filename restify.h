@@ -36,6 +36,7 @@ class Restify : public QWidget
 	private:
 		void _setupRequest();
 		void _setupResponse();
+		void _setupLaunchPad();
 		void _setHeaders(const QList<QPair<QByteArray, QByteArray> > headers, QTableWidget *table);
 
 		QHBoxLayout *requestLayout;
@@ -44,6 +45,11 @@ class Restify : public QWidget
 		QComboBox *method;
 		QLineEdit *url;
 		QPushButton *submit;
+
+		QWidget *launchPad;
+		QVBoxLayout *launchPadLayout;
+		QLabel *launchPad_GitHub;
+		QLabel *launchPad_Twitter;
 
 		QPushButton *settings;
 		QTableWidget *configData;
