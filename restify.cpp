@@ -207,14 +207,20 @@ void Restify::_setupLaunchPad()
 	launchPad_Samples->setTextFormat(Qt::RichText);
 	launchPad_Samples->setText("<img src=\"media/launchpad_samples.png\">");
 
+	QString sampleWidgetStyle = "QWidget{background-color: #F1F1F1; padding: 10px;}";
+	QString sampleLinkStyle = "style=\"color: #666666;font-size: 11px; font-family: Courier; text-decoration: none;\"";
+
 	launchPad_Samples_1 = new QLabel(this);
-	launchPad_Samples_1->setText("<a href=\"http://feeds.feedburner.com/KohanaModules?format=xml\">http://feeds.feedburner.com/KohanaModules?format=xml</a>");
+	launchPad_Samples_1->setStyleSheet(sampleWidgetStyle);
+	launchPad_Samples_1->setText("<a href=\"http://feeds.feedburner.com/KohanaModules?format=xml\" " + sampleLinkStyle + ">http://feeds.feedburner.com/KohanaModules?format=xml</a>");
 
 	launchPad_Samples_2 = new QLabel(this);
-	launchPad_Samples_2->setText("<a href=\"http://api.flickr.com/services/feeds/photos_public.gne?tags=cat&format=json\">http://api.flickr.com/services/feeds/photos_public.gne?tags=cat...</a>");
+	launchPad_Samples_2->setStyleSheet(sampleWidgetStyle);
+	launchPad_Samples_2->setText("<a href=\"http://api.flickr.com/services/feeds/photos_public.gne?tags=cat&format=json\" " + sampleLinkStyle + ">http://api.flickr.com/services/feeds/photos_public.gne?tags=cat...</a>");
 
 	launchPad_Samples_3 = new QLabel(this);
-	launchPad_Samples_3->setText("<a href=\"http://restify.io/test\">http://restify.io/test</a>");
+	launchPad_Samples_3->setStyleSheet(sampleWidgetStyle);
+	launchPad_Samples_3->setText("<a href=\"http://restify.io/test\" " + sampleLinkStyle + ">http://restify.io/test</a>");
 
 	connect(launchPad_Samples_1, SIGNAL(linkActivated(const QString&)), this, SLOT(_requestSample(const QString&)));
 	connect(launchPad_Samples_2, SIGNAL(linkActivated(const QString&)), this, SLOT(_requestSample(const QString&)));
@@ -231,6 +237,7 @@ void Restify::_setupLaunchPad()
 	launchPadLayout->addWidget(launchPad_Samples_3);
 
 	launchPad = new QWidget;
+	launchPad->setStyleSheet("QWidget{background-color: #ffffff; margin: 0px 100px 0 100px; }");
 	launchPad->setLayout(launchPadLayout);
 }
 
