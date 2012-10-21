@@ -77,7 +77,7 @@ void Restify::_setupRequest()
 	submit = new QPushButton(tr("Request"));
 	submit->connect(submit, SIGNAL(clicked()), this, SLOT(_request()));
 
-	loadingMovie = new QMovie("media/loading.gif");
+	loadingMovie = new QMovie(":loading.gif");
 	loadingMovie->start();
 
 	loading = new QLabel(this);
@@ -86,7 +86,7 @@ void Restify::_setupRequest()
 
 	settings = new QLabel(this);
 	settings->setTextFormat(Qt::RichText);
-	settings->setText("<a href=\"#\"><img src=\"media/gear.png\"></a>");
+	settings->setText("<a href=\"#\"><img src=\":gear.png\"></a>");
 	connect(settings, SIGNAL(linkActivated(const QString&)), this, SLOT(_toggleConfig()));
 
 	QStringList tableLabels;
@@ -202,21 +202,21 @@ void Restify::_setupLaunchPad()
 	launchPad_Vimeo = new QLabel(this);
 	launchPad_Vimeo->setOpenExternalLinks(true);
 	launchPad_Vimeo->setTextFormat(Qt::RichText);
-	launchPad_Vimeo->setText("<a href=\"http://vimeo.com/26659171\"><img src=\"media/launchpad_vimeo.png\"></a>");
+	launchPad_Vimeo->setText("<a href=\"http://vimeo.com/26659171\"><img src=\":launchpad_vimeo.png\"></a>");
 
 	launchPad_GitHub = new QLabel(this);
 	launchPad_GitHub->setOpenExternalLinks(true);
 	launchPad_GitHub->setTextFormat(Qt::RichText);
-	launchPad_GitHub->setText("<a href=\"https://github.com/morgan/qt-restify\"><img src=\"media/launchpad_github.png\"></a>");
+	launchPad_GitHub->setText("<a href=\"https://github.com/morgan/qt-restify\"><img src=\":launchpad_github.png\"></a>");
 
 	launchPad_Twitter = new QLabel(this);
 	launchPad_Twitter->setOpenExternalLinks(true);
 	launchPad_Twitter->setTextFormat(Qt::RichText);
-	launchPad_Twitter->setText("<a href=\"https://twitter.com/michealmorgan\"><img src=\"media/launchpad_twitter.png\"></a>");
+	launchPad_Twitter->setText("<a href=\"https://twitter.com/michealmorgan\"><img src=\":launchpad_twitter.png\"></a>");
 
 	launchPad_Samples = new QLabel(this);
 	launchPad_Samples->setTextFormat(Qt::RichText);
-	launchPad_Samples->setText("<img src=\"media/launchpad_samples.png\">");
+	launchPad_Samples->setText("<img src=\":launchpad_samples.png\">");
 
 	QString sampleWidgetStyle = "QWidget{background-color: #F1F1F1; padding: 10px;}";
 	QString sampleLinkStyle = "style=\"color: #666666;font-size: 11px; font-family: Courier; text-decoration: none;\"";

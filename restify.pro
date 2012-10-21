@@ -3,6 +3,8 @@ TARGET =
 DEPENDPATH += .
 INCLUDEPATH += .
 
+RESOURCES += media/qimageprepare.qrc
+
 QT += network
 
 HEADERS += restify.h highlighter.h

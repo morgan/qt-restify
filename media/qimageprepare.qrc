@@ -1,0 +1,10 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+	<file>gear.png</file>
+	<file>launchpad_github.png</file>
+	<file>launchpad_samples.png</file>
+	<file>launchpad_twitter.png</file>
+	<file>launchpad_vimeo.png</file>
+	<file>loading.gif</file>
+</qresource>
+</RCC>
