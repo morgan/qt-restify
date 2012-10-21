@@ -2,7 +2,7 @@
 
 An application for visualizing and testing RESTful requests.
 
-![Sample Request](https://github.com/morgan/qt-restify/raw/master/readme/screenshot.png)
+![Sample Request](https://raw.github.com/morgan/qt-restify/4.8.3/master/readme/screenshot.png)
 
 ## Compiling on Mac OS X
 
