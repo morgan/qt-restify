@@ -2,6 +2,8 @@
 
 An application for visualizing and testing RESTful requests.
 
+![Sample Request](readme/screenshot.png)
+
 ## Compiling on Mac OS X
 
 1. Install Xcode with Command Line Tools

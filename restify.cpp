@@ -223,7 +223,7 @@ void Restify::_setupLaunchPad()
 
 	launchPad_Samples_1 = new QLabel(this);
 	launchPad_Samples_1->setStyleSheet(sampleWidgetStyle);
-	launchPad_Samples_1->setText("<a href=\"http://feeds.feedburner.com/KohanaModules?format=xml\" " + sampleLinkStyle + ">http://feeds.feedburner.com/KohanaModules?format=xml</a>");
+	launchPad_Samples_1->setText("<a href=\"https://github.com/morgan.atom\" " + sampleLinkStyle + ">https://github.com/morgan.atom</a>");
 
 	launchPad_Samples_2 = new QLabel(this);
 	launchPad_Samples_2->setStyleSheet(sampleWidgetStyle);
@@ -231,7 +231,7 @@ void Restify::_setupLaunchPad()
 
 	launchPad_Samples_3 = new QLabel(this);
 	launchPad_Samples_3->setStyleSheet(sampleWidgetStyle);
-	launchPad_Samples_3->setText("<a href=\"http://restify.io/test\" " + sampleLinkStyle + ">http://restify.io/test</a>");
+	launchPad_Samples_3->setText("<a href=\"http://www.npr.org/rss/rss.php?id=1001\" " + sampleLinkStyle + ">http://www.npr.org/rss/rss.php?id=1001</a>");
 
 	connect(launchPad_Samples_1, SIGNAL(linkActivated(const QString&)), this, SLOT(_requestSample(const QString&)));
 	connect(launchPad_Samples_2, SIGNAL(linkActivated(const QString&)), this, SLOT(_requestSample(const QString&)));
