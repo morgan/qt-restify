@@ -71,6 +71,7 @@ void Restify::_setupRequest()
 
 	url = new QLineEdit;
 	url->setProperty("placeholderText", "http://api.example.com/resource.json?key=value");
+	url->setStyleSheet("QWidget{font-family: Courier;}");
 
 	submit = new QPushButton(tr("Request"));
 	submit->connect(submit, SIGNAL(clicked()), this, SLOT(_request()));
