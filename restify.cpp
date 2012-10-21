@@ -16,6 +16,7 @@ Restify::Restify()
 	requestLayout->addWidget(settings);
 	requestLayout->addWidget(url);
 	requestLayout->addWidget(submit);
+	requestLayout->addWidget(loading);
 
 	layout = new QVBoxLayout;
 	layout->setAlignment(Qt::AlignTop);
@@ -76,10 +77,17 @@ void Restify::_setupRequest()
 	submit = new QPushButton(tr("Request"));
 	submit->connect(submit, SIGNAL(clicked()), this, SLOT(_request()));
 
+	loadingMovie = new QMovie("media/loading.gif");
+	loadingMovie->start();
+
+	loading = new QLabel(this);
+	loading->setMovie(loadingMovie);
+	loading->hide();
+
 	settings = new QLabel(this);
 	settings->setTextFormat(Qt::RichText);
 	settings->setText("<a href=\"#\"><img src=\"media/gear.png\"></a>");
-	connect(settings, SIGNAL(linkActivated(const QString&)), this, SLOT(_toggleConfig(const QString&)));
+	connect(settings, SIGNAL(linkActivated(const QString&)), this, SLOT(_toggleConfig()));
 
 	QStringList tableLabels;
 	tableLabels << "Name" << "Value";
@@ -104,7 +112,7 @@ void Restify::_setupRequest()
  * @access	private
  * @return	void
  */
-void Restify::_toggleConfig(const QString& link)
+void Restify::_toggleConfig()
 {
 	if (configLayout->isVisible())
 	{
@@ -268,6 +276,11 @@ void Restify::_requestSample(const QString& link)
  */
 void Restify::_request()
 {
+	submit->hide();
+	loading->show();
+
+	launchPad->hide();
+
 	networkAccess = new QNetworkAccessManager(this);
 	connect(networkAccess, SIGNAL(finished(QNetworkReply*)), this, SLOT(_requestReply(QNetworkReply*)));
 
@@ -303,9 +316,6 @@ void Restify::_request()
  */
 void Restify::_requestReply(QNetworkReply *reply)
 {
-	launchPad->hide();
-	gettingStarted->show();
-
 	if ( ! reply->error())
 	{
 		message->hide();
@@ -334,6 +344,11 @@ void Restify::_requestReply(QNetworkReply *reply)
 		message->setText("There was an error processing your request. " + reply->errorString());
 		message->show();
 	}
+
+	loading->hide();
+	submit->show();
+
+	gettingStarted->show();	
 }
 
 /**
