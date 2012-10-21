@@ -76,8 +76,10 @@ void Restify::_setupRequest()
 	submit = new QPushButton(tr("Request"));
 	submit->connect(submit, SIGNAL(clicked()), this, SLOT(_request()));
 
-	settings = new QPushButton(tr("Config"));
-	settings->connect(settings, SIGNAL(clicked()), this, SLOT(_toggleConfig()));
+	settings = new QLabel(this);
+	settings->setTextFormat(Qt::RichText);
+	settings->setText("<a href=\"#\"><img src=\"media/gear.png\"></a>");
+	connect(settings, SIGNAL(linkActivated(const QString&)), this, SLOT(_toggleConfig(const QString&)));
 
 	QStringList tableLabels;
 	tableLabels << "Name" << "Value";
@@ -102,7 +104,7 @@ void Restify::_setupRequest()
  * @access	private
  * @return	void
  */
-void Restify::_toggleConfig()
+void Restify::_toggleConfig(const QString& link)
 {
 	if (configLayout->isVisible())
 	{

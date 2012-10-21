@@ -31,7 +31,7 @@ class Restify : public QWidget
 	private slots:
 		void _request();
 		void _requestReply(QNetworkReply *reply);
-		void _toggleConfig();
+		void _toggleConfig(const QString& link);
 		void _toggleLaunchPad();
 		void _requestSample(const QString& link);
 
@@ -60,7 +60,7 @@ class Restify : public QWidget
 		QLabel *launchPad_Samples_3;
 		QPushButton *gettingStarted;
 
-		QPushButton *settings;
+		QLabel *settings;
 		QTableWidget *configData;
 		QTableWidget *configHeaders;
 		QTabWidget *configLayout;
