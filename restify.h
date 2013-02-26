@@ -1,7 +1,7 @@
 #ifndef RESTIFY_H
 #define RESTIFY_H
 
-#include <QtGui>
+#include <QtWidgets>
 #include <QWidget>
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>

@@ -94,11 +94,11 @@ void Restify::_setupRequest()
 
 	configData = new QTableWidget(10, 2);
 	configData->setHorizontalHeaderLabels(tableLabels);
-	configData->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
+	configData->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
 	configHeaders = new QTableWidget(10, 2);
 	configHeaders->setHorizontalHeaderLabels(tableLabels);
-	configHeaders->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
+	configHeaders->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
 	configLayout = new QTabWidget;
 	configLayout->addTab(configData, tr("Data"));
@@ -168,10 +168,10 @@ void Restify::_setupResponse()
 	highlighter = new Highlighter(responseContent->document());
 
 	responseHeadersReceived = new QTableWidget;
-	responseHeadersReceived->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
+	responseHeadersReceived->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
 	responseHeadersSent = new QTableWidget;
-	responseHeadersSent->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
+	responseHeadersSent->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
 	responseLayout = new QTabWidget;
 	responseLayout->addTab(responseContent, tr("Response"));

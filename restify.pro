@@ -1,11 +1,11 @@
 TEMPLATE = app
-TARGET = 
+TARGET = restify
 DEPENDPATH += .
 INCLUDEPATH += .
 
 RESOURCES += media/qimageprepare.qrc
 
-QT += network
+QT += network widgets
 
 HEADERS += restify.h highlighter.h
 SOURCES += main.cpp restify.cpp highlighter.cpp 
